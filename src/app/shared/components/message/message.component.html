@@ -1,0 +1,5 @@
+<div class='container'>
+    <div *ngFor='let message of messages' class='alert alert-{{message.type}}'><i *ngIf='message.icon'
+            class='fas fa-{{getMessateIconName(message.icon)}}'></i> {{message.text}}
+    </div>
+</div>
