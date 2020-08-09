@@ -12,6 +12,7 @@ import { FormGroup } from '@angular/forms';
 export class TouchComponent implements OnInit, OnDestroy {
   settingForms: FormGroup; // DとWの設定を保持するフォーム
   counter: number = 0;
+  message: string = "スタートボタンを押さえてください";
   subs: Subscription[] = []; // subscriptionを格納
 
   constructor(
@@ -25,11 +26,14 @@ export class TouchComponent implements OnInit, OnDestroy {
 
 
   // かかった時間を記録を該当のデータベースにポスト
-  recordTime(D, W, time): Observable<Time> {
+  recordTime(D: number, W: number, time: number): Observable<Time> {
     return this.touchService.recordTime(D, W, time);
   }
 
-
+  // メッセージを表示
+  setMessage(m: string): void {
+    this.message = m;
+  }
 
   start(): void {
     console.log("計測開始")
@@ -40,6 +44,6 @@ export class TouchComponent implements OnInit, OnDestroy {
   }
 
   inspect(): void {
-    console.log(this.counter)
+    this.setMessage("こんにちは")
   }
 }

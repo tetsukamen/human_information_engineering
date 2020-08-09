@@ -10,13 +10,13 @@ npm run mock
 ## 設計
 
 
-WとDの切り替え機能　プルダウン
-    labelにmm、valueにindex
-    WとDを設定したらカウンターを０にセット
+（完了）WとDの切り替え機能　プルダウン
+    （完了）labelにmm、valueにindex
+    （完了）WとDを設定したらカウンターを０にセット
 
 
 繰り返す
-    インジケータに「スタートボタンを押さえてください」と表示　displayMessage(message)
+    （完了）インジケータに「スタートボタンを押さえてください」と表示　displayMessage(message)
     真ん中のボタンを指で押える
     指示器点灯ロジックスタート startTest()
         計測中フラグON
