@@ -1,9 +1,34 @@
-<div class="row wrapper">
-    <div class="col-1 area">禁止</div>
-    <div class="col-2 area">タッチ</div>
-    <div class="col-1 area">禁止</div>
-    <button class="col-4 area" (click)="start()">開始</button>
-    <div class="col-1 area">禁止</div>
-    <div class="col-2 area">タッチ</div>
-    <div class="col-1 area">禁止</div>
+<div class="wrapper">
+    <form class="d-flex justify-content-center" [formGroup]="settingForms">
+        <div class="p-2">
+            D=
+            <select [formControlName]="'D'">
+                <option value="0">20.8</option>
+                <option value="1">41.6</option>
+                <option value="2">72.8</option>
+            </select>
+            mm
+        </div>
+        <div class="p-2">
+            W=
+            <select [formControlName]="'W'">
+                <option value="0">4.16</option>
+                <option value="1">10.4</option>
+                <option value="2">20.8</option>
+            </select>
+            mm
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-1 area">禁止</div>
+        <div class="col-2 area">タッチ</div>
+        <div class="col-1 area">禁止</div>
+        <button class="col-4 area" (click)="start()">開始</button>
+        <div class="col-1 area">禁止</div>
+        <div class="col-2 area">タッチ</div>
+        <div class="col-1 area">禁止</div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button (click)="inspect()">検証</button>
+    </div>
 </div>
