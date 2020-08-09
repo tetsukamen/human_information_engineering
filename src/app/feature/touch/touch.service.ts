@@ -27,6 +27,7 @@ export class TouchService {
     });
   }
 
+
   // かかった時間を記録を該当のデータベースにポスト
   recordTime(D, W, time): Observable<Time> {
     const dbNumber = this.DWtable[D][W];
