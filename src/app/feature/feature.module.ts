@@ -6,7 +6,9 @@ import { TouchComponent } from './touch/touch.component';
 
 
 @NgModule({
-  declarations: [TouchComponent],
+  declarations: [
+    TouchComponent,
+  ],
   imports: [
     CommonModule,
     FeatureRoutingModule
