@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { TouchService } from './touch.service';
-import { Observable, Subscription } from 'rxjs';
-import { Time } from 'src/app/core/models/time';
+import { Subscription } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { faPlus, faCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,13 +11,14 @@ import { faPlus, faCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class TouchComponent implements OnInit, OnDestroy {
   settingForms: FormGroup; // DとWの設定を保持するフォーム
-  counter: number = 0;
+  counter: number = 1; // カウンター
+  displayCounter: number; // 表示用カウンター
   message: string = "スタートボタンを押さえてください";
   onTestFlag: boolean = false; // テスト中フラグ
   subs: Subscription[] = []; // subscriptionを格納
   correctLabel: null | "right" | "left" = null; // 左右どちらの指示器を点灯するか、またはどちらも点灯しないか
   startTime;
-  endTIme;
+  endTime;
 
   // fontawsome
   faPlus = faPlus;
@@ -31,14 +31,10 @@ export class TouchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.settingForms = this.touchService.createSettingForms();
-    this.subs.push(this.settingForms.valueChanges.subscribe(_ => this.counter = 0));
+    this.subs.push(this.settingForms.valueChanges.subscribe(_ => this.counter = 1));
   }
 
-  // @HostListener('mousedown', ['$event'])
-  // onMouseDown(event) {
-  //   this.inspect()
-  // }
-
+  // タッチされたら場所ごとのメソッドを実行
   @HostListener('touchstart', ['$event']) onTouchStart(event) {
     const id = event.target.id;
     switch (id) {
@@ -46,43 +42,77 @@ export class TouchComponent implements OnInit, OnDestroy {
         this.startTest();
         break;
       case "right-target":
-        console.log("right-target");
+        this.endTest("right");
         break;
       case "left-target":
-        console.log("left-target");
+        this.endTest("left");
         break;
-      case "fail-area":
-        console.log("fail-area");
+      default:
+        this.onTestFlag == false;
+        this.setMessage("失敗 スタートボタンタッチで次の計測開始");
     }
   }
 
+  // 手が離れた際のイベント
+  @HostListener('touchend', ['$event']) onTouchEnd(event) {
+    const id = event.target.id;
+    if (id == "start-position") {
+      this.setStartTime();
+    }
+  }
+
+  // 指示器点灯ロジックスタート
   startTest(): void {
+    this.correctLabel = null;
+    this.displayCounter = this.counter;
     if (!this.onTestFlag) {
-      this.onTestFlag = !this.onTestFlag;
+      this.onTestFlag = true;
       this.setMessage("計測中");
       const waitMiliSecond = 1000 + Math.random() * 2000; // 1~3秒の範囲の乱数生成（単位はミリ秒）
       // waitMileSecondが経過したらランダムに左右どちらかを点灯
       setTimeout(() => {
-        if (Math.random() > 0.5) {
-          this.correctLabel = "left";
-        } else {
-          this.correctLabel = "right";
+        if (this.onTestFlag) {
+          if (Math.random() > 0.5) {
+            this.correctLabel = "left";
+          } else {
+            this.correctLabel = "right";
+          }
         }
       }, waitMiliSecond);
+    } else {
+      this.onTestFlag = false;
+      this.setMessage("失敗 スタートボタンタッチで次の計測開始");
     }
   }
 
+  // タイマーストップしてかかった時間を保持
+  endTest(touchedLabel): void {
+    // タイマーストップ
+    if (this.onTestFlag) {
+      this.setEndTime();
+      this.counter += 1; // カウンターを１加算
+    }
+    // 計測中フラグOFF
+    this.onTestFlag = false;
+    const progressTime = this.endTime - this.startTime;
+    // タッチが成功しているかチェックする
+    if (this.correctLabel == touchedLabel) {
+      this.setMessage(`${progressTime}ms スタートボタンタッチで次の計測開始`);
+    } else {
+      this.setMessage("失敗 スタートボタンタッチで次の計測開始");
+    }
+
+    console.log(this.onTestFlag)
+  }
+
+  // タイマースタート
   setStartTime(): void {
     this.startTime = new Date().getTime();
   }
 
+  // タイマーストップ
   setEndTime(): void {
-    this.endTIme = new Date().getTime();
-  }
-
-  // かかった時間を記録を該当のデータベースにポスト
-  recordTime(D: number, W: number, time: number): Observable<Time> {
-    return this.touchService.recordTime(D, W, time);
+    this.endTime = new Date().getTime();
   }
 
   // メッセージを表示
@@ -94,8 +124,8 @@ export class TouchComponent implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  inspect(): void {
-    this.setMessage("こんにちは")
-  }
+  // inspect(): void {
+  //   console.log(Math.random())
+  // }
 
 }

@@ -20,7 +20,7 @@
         </div>
     </form>
     <div class="d-flex justify-content-center">
-        <div class="p-2">{{counter}}回目</div>
+        <div class="p-2">{{displayCounter}}回目</div>
         <div class="p-2">{{message}}</div>
     </div>
     <div class="d-flex justify-content-center">
@@ -32,12 +32,12 @@
         <div id="fail-area" class="col-1 area">禁止</div>
         <div id="left-target" class="col-2 area">タッチ</div>
         <div id="fail-area" class="col-1 area">禁止</div>
-        <button id="start-position" class="col-4 area">開始</button>
+        <button id="start-position" class="col-4 area start-position">開始</button>
         <div id="fail-area" class="col-1 area">禁止</div>
         <div id="right-target" class="col-2 area">タッチ</div>
         <div id="fail-area" class="col-1 area">禁止</div>
     </div>
-    <div class="d-flex justify-content-center">
-        <button id="inspect">検証</button>
-    </div>
+    <!-- <div class="d-flex justify-content-center">
+        <button (click)="inspect()">検証</button>
+    </div> -->
 </div>
