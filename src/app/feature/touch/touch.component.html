@@ -28,14 +28,14 @@
         <fa-icon class="p-2" [icon]="faPlus"></fa-icon>
         <fa-icon class="p-2" [class.lightOn]="correctLabel=='right'" [icon]="faCircle"></fa-icon>
     </div>
-    <div class="row">
-        <div id="fail-area" class="col-1 area">禁止</div>
-        <div id="left-target" class="col-2 area">タッチ</div>
-        <div id="fail-area" class="col-1 area">禁止</div>
-        <button id="start-position" class="col-4 area start-position">開始</button>
-        <div id="fail-area" class="col-1 area">禁止</div>
-        <div id="right-target" class="col-2 area">タッチ</div>
-        <div id="fail-area" class="col-1 area">禁止</div>
+    <div class="d-flex">
+        <div id="fail-area" [style.width]="47.5-D-W+'%'" class="area no-touch">禁止</div>
+        <div id="left-target" [style.width]="W+'%'" class="area touch">タッチ</div>
+        <div id="fail-area" [style.width]="D+'%'" class="area no-touch">禁止</div>
+        <button id="start-position" class="area start-position">開始</button>
+        <div id="fail-area" [style.width]="D+'%'" class="area no-touch">禁止</div>
+        <div id="right-target" [style.width]="W+'%'" class="area touch">タッチ</div>
+        <div id="fail-area" [style.width]="47.5-D-W+'%'" class="area no-touch">禁止</div>
     </div>
     <!-- <div class="d-flex justify-content-center">
         <button (click)="inspect()">検証</button>

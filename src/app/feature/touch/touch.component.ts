@@ -19,6 +19,10 @@ export class TouchComponent implements OnInit, OnDestroy {
   correctLabel: null | "right" | "left" = null; // 左右どちらの指示器を点灯するか、またはどちらも点灯しないか
   startTime;
   endTime;
+  D = 10;
+  W = 2;
+  DArray = [10, 20, 35];
+  WArray = [2, 5, 10];
 
   // fontawsome
   faPlus = faPlus;
@@ -32,6 +36,8 @@ export class TouchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.settingForms = this.touchService.createSettingForms();
     this.subs.push(this.settingForms.valueChanges.subscribe(_ => this.counter = 1));
+    this.subs.push(this.settingForms.get('D').valueChanges.subscribe(value => this.D = this.DArray[value]));
+    this.subs.push(this.settingForms.get('W').valueChanges.subscribe(value => this.W = this.WArray[value]));
   }
 
   // タッチされたら場所ごとのメソッドを実行

@@ -13,7 +13,7 @@ ng build --prod --base-href=/hie/
 ## 設計
 
 
-<!-- WとDの切り替え機能　プルダウン -->
+WとDの切り替え機能　プルダウン
     <!-- labelにmm、valueにindex -->
     <!-- WとDを設定したらカウンターを０にセット -->
 

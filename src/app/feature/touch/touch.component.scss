@@ -2,9 +2,19 @@
     height: 100vh;
     user-select: none;
     .area {
-        background-color: blueviolet;
+        text-align: center;
+    }
+    .touch {
+        background-color: mediumspringgreen;
+    }
+    .no-touch {
+        background-color: palevioletred;
     }
     .lightOn {
-        color: yellow;
+        color: orange;
+    }
+    .start-position {
+        width: 5%;
+        background-color: mediumaquamarine;
     }
 }
